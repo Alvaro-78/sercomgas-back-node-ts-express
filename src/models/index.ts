@@ -2,8 +2,18 @@ import sequelize from '../db';
 import { Marketer } from './Marketers';
 import { Operation } from './Operations';
 
-Operation.belongsTo(Marketer, { foreignKey: 'marketerId', as: 'marketer' });
-Operation.belongsTo(Marketer, { foreignKey: 'clientId', as: 'client' });
+Marketer.hasMany(Operation, {
+	sourceKey: 'id',
+	foreignKey: 'marketerId',
+	as: 'operations',
+});
+
+Operation.belongsTo(Marketer, {
+	targetKey: 'id',
+	foreignKey: 'marketerId',
+	as: 'marketer',
+});
+
 
 sequelize.sync({ force: true }).then(() => console.log('Tablas creadas'));
 
