@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
 import { Marketer } from '../models/Marketers';
 
-const getAllMarketers: RequestHandler = async (req, res) => {
+export const getAllMarketers: RequestHandler = async (req, res) => {
 	try {
 		const marketers = await Marketer.findAll();
 		return res.json(marketers);
@@ -10,7 +10,7 @@ const getAllMarketers: RequestHandler = async (req, res) => {
 	}
 };
 
-const createMarketer: RequestHandler = async (req, res) => {
+export const createMarketer: RequestHandler = async (req, res) => {
 	try {
 		const newMarketer = await Marketer.create({ ...req.body });
 		return res.json(newMarketer);
@@ -19,4 +19,17 @@ const createMarketer: RequestHandler = async (req, res) => {
 	}
 };
 
-export { getAllMarketers, createMarketer };
+export const deleteMarketer: RequestHandler = async (req, res) => {
+	try {
+		const id = req.params.id;
+		const deleted = await Marketer.destroy({ where: { id } });
+		if (deleted) {
+			return res.json({ message: 'Marketer eliminado' });
+		} else {
+			return res.status(404).json({ error: 'Marketer no encontrado' });
+		}
+	} catch (e: any) {
+		return res.status(400).json({ error: e.message });
+	}
+};
+
