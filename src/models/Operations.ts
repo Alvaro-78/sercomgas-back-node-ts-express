@@ -1,5 +1,5 @@
 import { Model, DataTypes } from 'sequelize';
-import sequelize from '../db';
+import { sequelize } from '../db';
 import { Marketer } from './Marketers';
 
 export class Operation extends Model {
