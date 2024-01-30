@@ -1,9 +1,9 @@
 import { Model, DataTypes } from 'sequelize';
 import sequelize from '../db';
-import { Marketer } from './Marketers';
+import { Marketers } from './Marketers';
+// import { Clients } from './Clients ';
 
-export class Operation extends Model {
-	public id!: number;
+export class Operations extends Model {
 	public marketerId!: number;
 	public clientId!: number;
 	public type!: string;
@@ -13,24 +13,12 @@ export class Operation extends Model {
 	public readonly updatedAt!: Date;
 }
 
-Operation.init(
+Operations.init(
 	{
-		id: {
-			type: DataTypes.INTEGER,
-			autoIncrement: true,
-			primaryKey: true,
-		},
 		marketerId: {
 			type: DataTypes.INTEGER,
 			references: {
-				model: Marketer,
-				key: 'id',
-			},
-		},
-		clientId: {
-			type: DataTypes.INTEGER,
-			references: {
-				model: Marketer,
+				model: Marketers,
 				key: 'id',
 			},
 		},

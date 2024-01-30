@@ -1,13 +1,13 @@
 import { Router } from 'express';
 import {
+	getAllMarketers,
 	createMarketer,
 	deleteMarketer,
-	getAllMarketers,
 } from '../controller/MarketerController';
 
 const router = Router();
 
-router.get('/', getAllMarketers);
+router.get('/marketers', getAllMarketers);
 router.post('/marketers', createMarketer);
 router.delete('/marketers/:id', deleteMarketer);
 

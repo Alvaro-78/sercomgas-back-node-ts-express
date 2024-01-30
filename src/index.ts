@@ -1,15 +1,19 @@
 import express from 'express';
+import cors from 'cors';
 import db from './db';
-import marketerRouter from './routes/marketerRoutes';
-import operationRouter from './routes/operationRoutes';
+import marketerRoutes from './routes/marketerRoutes';
+import operationRoutes from './routes/operationRoutes';
+// import clientRoutes from './routes/clientRoutes';
 
 const app = express();
 const port = 3002;
 
 app.use(express.json());
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
-app.use('/marketers', marketerRouter);
-app.use('/operations', operationRouter);
+app.use(marketerRoutes);
+app.use(operationRoutes);
+// app.use(clientRoutes);
 
 
 

@@ -1,19 +1,19 @@
 import { Request, Response } from 'express';
-import { Operation } from '../models/Operations';
+import { Operations } from '../models/Operations';
 
-const getAllOperations = async (_req: Request, res: Response) => {
+export const getAllOperations = async (_req: Request, res: Response) => {
 	try {
-		const operations = await Operation.findAll();
+		const operations = await Operations.findAll();
 		return res.json(operations);
 	} catch (e: any) {
 		return res.status(500).json({ error: e.message });
 	}
 };
 
-const getOperationById = async (req: Request, res: Response) => {
+export const getOperationById = async (req: Request, res: Response) => {
 	try {
 		const id = req.params.id;
-		const operation = await Operation.findByPk(id);
+		const operation = await Operations.findByPk(id);
 		if (operation) {
 			return res.json(operation);
 		} else {
@@ -24,19 +24,19 @@ const getOperationById = async (req: Request, res: Response) => {
 	}
 };
 
-const createOperation = async (req: Request, res: Response) => {
+export const createOperation = async (req: Request, res: Response) => {
 	try {
-		const newOperation = await Operation.create(req.body);
+		const newOperation = await Operations.create(req.body);
 		return res.json(newOperation);
 	} catch (e: any) {
 		return res.status(400).json({ error: e.message });
 	}
 };
 
-const updateOperation = async (req: Request, res: Response) => {
+export const updateOperation = async (req: Request, res: Response) => {
 	try {
 		const id = req.params.id;
-		const operation = await Operation.findByPk(id);
+		const operation = await Operations.findByPk(id);
 		if (operation) {
 			await operation.update(req.body);
 			return res.json(operation);
@@ -48,10 +48,10 @@ const updateOperation = async (req: Request, res: Response) => {
 	}
 };
 
-const deleteOperation = async (req: Request, res: Response) => {
+export const deleteOperation = async (req: Request, res: Response) => {
 	try {
 		const id = req.params.id;
-		const deleted = await Operation.destroy({ where: { id } });
+		const deleted = await Operations.destroy({ where: { id } });
 		if (deleted) {
 			return res.json({ message: 'Operation eliminada' });
 		} else {
@@ -62,10 +62,4 @@ const deleteOperation = async (req: Request, res: Response) => {
 	}
 };
 
-export {
-	getAllOperations,
-	getOperationById,
-	createOperation,
-	updateOperation,
-	deleteOperation,
-};
+

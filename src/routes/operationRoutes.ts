@@ -1,12 +1,19 @@
+import { getAllMarketers } from './../controller/MarketerController';
 import { Router } from 'express';
-import * as operationController from '../controller/OperationController';
+import {
+	getAllOperations,
+	getOperationById,
+	createOperation,
+	updateOperation,
+	deleteOperation,
+} from '../controller/OperationController';
 
 const router = Router();
 
-router.get('/', operationController.getAllOperations);
-router.get('/operations/:id', operationController.getOperationById);
-router.post('/operations', operationController.createOperation);
-router.put('/operations/:id', operationController.updateOperation);
-router.delete('/operations/:id', operationController.deleteOperation);
+router.get('/operations', getAllOperations);
+router.get('/operations/:id', getOperationById);
+router.post('/operations', createOperation);
+router.put('/operations/:id', updateOperation);
+router.delete('/operations/:id', deleteOperation);
 
 export default router;
