@@ -1,10 +1,23 @@
 import { RequestHandler } from 'express';
 import { Marketer } from '../models/Marketers';
+import { Operation } from '../models/Operations';
 
 export const getAllMarketers: RequestHandler = async (req, res) => {
 	try {
 		const marketers = await Marketer.findAll();
 		return res.json(marketers);
+	} catch (e: any) {
+		return res.status(500).json({ error: e.message });
+	}
+};
+
+export const getMarketerOperations: RequestHandler = async (req, res) => {
+	const { id } = req.params;
+	try {
+		const marketerOperations = await Operation.findAll({
+			where: { marketerId: id },
+		});
+		return res.json(marketerOperations);
 	} catch (e: any) {
 		return res.status(500).json({ error: e.message });
 	}

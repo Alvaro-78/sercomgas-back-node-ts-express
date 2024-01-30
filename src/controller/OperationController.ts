@@ -27,10 +27,12 @@ const getOperationById = async (req: Request, res: Response) => {
 };
 
 const createOperation = async (req: Request, res: Response) => {
-	const { marketerId, type, amount, price, currenty_currency } = req.body;
+	const { marketerId, clientId, type, amount, price, currenty_currency } =
+		req.body;
 	try {
 		const newOperation = await Operation.create({
 			marketerId,
+			clientId,
 			type,
 			amount,
 			price,
