@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
 
 async function main() {
 	try {
-		await sequelize.sync({ force: false });
+		await sequelize.sync({ alter: true });
 		app.listen(port, () => {
 			console.log(`I am ready in http://localhost:${port}`);
 		});
