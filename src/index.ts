@@ -10,22 +10,21 @@ const port = 3000;
 app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
-app.use('/marketers', marketerRouter);
-app.use('/operations', operationRouter);
+app.use(marketerRouter);
+app.use(operationRouter);
 
 app.get('/', (req, res) => {
 	res.send('hola papi');
 });
 
-app.listen(port, () => {
-	console.log(`I am ready in http://localhost:${port}`);
-});
-
 async function main() {
 	try {
-		await sequelize.authenticate();
+		await sequelize.sync({ force: false });
+		app.listen(port, () => {
+			console.log(`I am ready in http://localhost:${port}`);
+		});
 	} catch (error) {
-		console.log(error);
+		console.log('Unable to connect to the database', error);
 	}
 }
 
