@@ -1,16 +1,15 @@
 import { Model, DataTypes } from 'sequelize';
 import { sequelize } from '../db';
 import { Operation } from './Operations';
-import { Client } from './Client';
 
-export class Marketer extends Model {
+export class Client extends Model {
 	public id!: number;
 	public name!: string;
 	public readonly createdAt!: Date;
 	public readonly updatedAt!: Date;
 }
 
-Marketer.init(
+Client.init(
 	{
 		id: {
 			type: DataTypes.INTEGER,
@@ -23,18 +22,17 @@ Marketer.init(
 		},
 	},
 	{
-		tableName: 'marketers',
+		tableName: 'clients',
 		sequelize,
 	}
 );
 
-Marketer.hasMany(Operation, {
-	foreignKey: 'marketerId',
+Client.hasMany(Operation, {
+	foreignKey: 'clientId',
 	sourceKey: 'id',
 });
 
-Operation.belongsTo(Marketer, {
-	foreignKey: 'marketerId',
+Operation.belongsTo(Client, {
+	foreignKey: 'clientId',
 	targetKey: 'id',
 });
-
