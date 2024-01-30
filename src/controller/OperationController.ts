@@ -11,13 +11,15 @@ const getAllOperations = async (_req: Request, res: Response) => {
 };
 
 const getOperationById = async (req: Request, res: Response) => {
+	const id = req.params.id;
 	try {
-		const id = req.params.id;
-		const operation = await Operation.findByPk(id);
+		const operation = await Operation.findOne({
+			where: { id },
+		});
 		if (operation) {
 			return res.json(operation);
 		} else {
-			return res.status(404).json({ error: 'Operation no encontrada' });
+			return res.status(404).json({ error: 'Operation not found' });
 		}
 	} catch (e: any) {
 		return res.status(500).json({ error: e.message });
@@ -25,8 +27,15 @@ const getOperationById = async (req: Request, res: Response) => {
 };
 
 const createOperation = async (req: Request, res: Response) => {
+	const { marketerId, type, amount, price, currenty_currency } = req.body;
 	try {
-		const newOperation = await Operation.create(req.body);
+		const newOperation = await Operation.create({
+			marketerId,
+			type,
+			amount,
+			price,
+			currenty_currency,
+		});
 		return res.json(newOperation);
 	} catch (e: any) {
 		return res.status(400).json({ error: e.message });
@@ -34,8 +43,8 @@ const createOperation = async (req: Request, res: Response) => {
 };
 
 const updateOperation = async (req: Request, res: Response) => {
+	const id = req.params.id;
 	try {
-		const id = req.params.id;
 		const operation = await Operation.findByPk(id);
 		if (operation) {
 			await operation.update(req.body);
@@ -49,8 +58,8 @@ const updateOperation = async (req: Request, res: Response) => {
 };
 
 const deleteOperation = async (req: Request, res: Response) => {
+	const id = req.params.id;
 	try {
-		const id = req.params.id;
 		const deleted = await Operation.destroy({ where: { id } });
 		if (deleted) {
 			return res.json({ message: 'Operation eliminada' });

@@ -11,8 +11,16 @@ export const getAllMarketers: RequestHandler = async (req, res) => {
 };
 
 export const createMarketer: RequestHandler = async (req, res) => {
+	const { name } = req.body;
 	try {
-		const newMarketer = await Marketer.create({ ...req.body });
+		const existingMarketer = await Marketer.findOne({ where: { name } });
+
+		if (existingMarketer) {
+			return res.status(400).json({
+				message: 'Ya existe un Marketer con ese nombre',
+			});
+		}
+		const newMarketer = await Marketer.create({ name });
 		return res.json(newMarketer);
 	} catch (e: any) {
 		return res.status(400).json({ error: e.message });
@@ -20,8 +28,8 @@ export const createMarketer: RequestHandler = async (req, res) => {
 };
 
 export const deleteMarketer: RequestHandler = async (req, res) => {
+	const id = req.params.id;
 	try {
-		const id = req.params.id;
 		const deleted = await Marketer.destroy({ where: { id } });
 		if (deleted) {
 			return res.json({ message: 'Marketer eliminado' });
