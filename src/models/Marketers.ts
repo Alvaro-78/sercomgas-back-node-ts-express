@@ -1,5 +1,6 @@
 import { Model, DataTypes } from 'sequelize';
 import { sequelize } from '../db';
+import { Operation } from './Operations';
 
 export class Marketer extends Model {
 	public id!: number;
@@ -25,3 +26,13 @@ Marketer.init(
 		sequelize,
 	}
 );
+
+Marketer.hasMany(Operation, {
+	foreignKey: 'marketerId',
+	sourceKey: 'id',
+});
+
+Operation.belongsTo(Marketer, {
+	foreignKey: 'marketerId',
+	targetKey: 'id',
+});
